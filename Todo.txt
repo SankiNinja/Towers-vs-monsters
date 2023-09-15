@@ -4,9 +4,9 @@ Systems:
     [] Monster Queue
 [] Tower Builder
 [] Game Manager
-[] Build Recorder
+[] Tower Build Recorder
     [] Build Player
-[] Spawn Recorder
+[] Monster Spawn Recorder
     [] Spawn Player
 [] Interaction Manager
 [] Tower Behaviours
