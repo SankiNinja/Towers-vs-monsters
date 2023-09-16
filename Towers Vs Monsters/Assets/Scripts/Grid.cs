@@ -12,6 +12,8 @@ public class Grid : MonoBehaviour
 
     public List<Tile> Path;
 
+    public List<Tile> Tiles => grid;
+
     public List<Vector3> pathCurve;
 
     [SerializeField] private Tile tilePrefab;

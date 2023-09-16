@@ -43,6 +43,12 @@ public class Tile : MonoBehaviour
         UpdateTileVisual();
     }
 
+    public void SetTowerType(TowerType type)
+    {
+        towerType = type;
+        UpdateTileVisual();
+    }
+
     public void OnValidate()
     {
         UpdateTileVisual();
@@ -51,14 +57,20 @@ public class Tile : MonoBehaviour
 
     private void UpdateTileVisual()
     {
-        for (int i = 0; i < tiles.Length; i++)
+        if (tiles != null)
         {
-            tiles[i].SetActive(i == (int)tileType);
+            for (int i = 0; i < tiles.Length; i++)
+            {
+                tiles[i].SetActive(i == (int)tileType);
+            }
         }
 
-        for (int i = 0; i < towers.Length; i++)
+        if (towers != null)
         {
-            towers[i].gameObject.SetActive(i == (int)towerType && tileType == TileType.Grass);
+            for (int i = 0; i < towers.Length; i++)
+            {
+                towers[i].gameObject.SetActive(i == (int)towerType && tileType == TileType.Grass);
+            }
         }
     }
 
