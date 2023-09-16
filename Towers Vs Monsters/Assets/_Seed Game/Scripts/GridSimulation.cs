@@ -16,13 +16,13 @@ public class GridSimulation : MonoBehaviour
         if (simOnValidate == false)
             return;
 
-        SimGame();
+        SimGame(step);
     }
 
-    public void SimGame()
+    public void SimGame(int steps)
     {
         loader.LoadData();
-        SimulateWorld(step);
+        SimulateWorld(steps);
     }
 
     public void SimulateWorld(int steps)

@@ -21,6 +21,8 @@ public class TileActionsUI : MonoBehaviour
     public TextMeshProUGUI actionDText;
 
     private Tile _tile;
+
+    public GridDataLoader loader;
     
     private void Awake()
     {
@@ -36,8 +38,8 @@ public class TileActionsUI : MonoBehaviour
         
         actionAText.SetText("Hill");
         actionBText.SetText("Crystal");
-        actionCText.SetText("Tree 3");
-        actionDText.SetText("Rock");
+        actionCText.SetText("Forest");
+        actionDText.SetText("Grass");
 
         visual.SetActive(false);
     }
@@ -53,25 +55,29 @@ public class TileActionsUI : MonoBehaviour
 
     private void OnActionButtonClickedA()
     {
-        _tile.SetTileType(TileType.Hill);
+        _tile.SetTileType(TileType.Rock);
+        loader.SaveGridData();
         visual.gameObject.SetActive(false);
     }
 
     private void OnActionButtonClickedB()
     {
         _tile.SetTileType(TileType.Crystal);
+        loader.SaveGridData();
         visual.gameObject.SetActive(false);
     }
 
     private void OnActionButtonClickedC()
     {
-        _tile.SetTileType(TileType.Tree3);
+        _tile.SetTileType(TileType.Tree1);
+        loader.SaveGridData();
         visual.gameObject.SetActive(false);
     }
 
     private void OnActionButtonClickedD()
     {
-        _tile.SetTileType(TileType.Rock);
+        _tile.SetTileType(TileType.Grass);
+        loader.SaveGridData();
         visual.gameObject.SetActive(false);
     }
 }
