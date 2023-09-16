@@ -11,7 +11,6 @@ public struct TowerStats
     [Range(1, 1000)] public float Cost;
 }
 
-[CreateAssetMenu(menuName = "Custom", fileName = "TowerType")]
 public class TowerData : ScriptableObject
 {
     [FormerlySerializedAs("TowerImage")] public Sprite TowerSprite;

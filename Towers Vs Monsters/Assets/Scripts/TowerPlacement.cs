@@ -24,9 +24,9 @@ public class TowerPlacement : MonoBehaviour
         var tower = tile.GetTower();
         tower.Weapons.SetWeaponType(data.WeaponType);
 
-        var tiles = Grid.Instance.Tiles;
+        var tiles = Grid.Instance.TileMap;
 
-        for (int i = 0; i < tiles.Count; i++)
+        for (int i = 0; i < tiles.Length; i++)
         {
             if (tiles[i].TileType != TileType.Grass) continue;
 
@@ -43,9 +43,9 @@ public class TowerPlacement : MonoBehaviour
 
     public void HideSelectionMode()
     {
-        var tiles = Grid.Instance.Tiles;
+        var tiles = Grid.Instance.TileMap;
 
-        for (int i = 0; i < tiles.Count; i++)
+        for (int i = 0; i < tiles.Length; i++)
         {
             if (tiles[i].TileType != TileType.Grass) continue;
 
