@@ -1,5 +1,3 @@
-using System.Collections;
-using NaughtyAttributes;
 using UnityEngine;
 
 public enum TileType
@@ -16,14 +14,28 @@ public enum TileType
     Hill,
 }
 
+public enum TowerType
+{
+    None,
+    Selection,
+    Small,
+    Tall,
+}
+
 [SelectionBase]
 public class Tile : MonoBehaviour
 {
     [SerializeField] private GameObject[] tiles;
 
+    [SerializeField] private Tower[] towers;
+
     [SerializeField] private TileType tileType;
 
+    [SerializeField] private TowerType towerType;
+
     public TileType TileType => tileType;
+
+    public TowerType TowerType => towerType;
 
     public void SetTileType(TileType type)
     {
@@ -34,6 +46,7 @@ public class Tile : MonoBehaviour
     public void OnValidate()
     {
         UpdateTileVisual();
+        //UpdateName();
     }
 
     private void UpdateTileVisual()
@@ -42,5 +55,29 @@ public class Tile : MonoBehaviour
         {
             tiles[i].SetActive(i == (int)tileType);
         }
+
+        for (int i = 0; i < towers.Length; i++)
+        {
+            towers[i].gameObject.SetActive(i == (int)towerType && tileType == TileType.Grass);
+        }
+    }
+
+    private void UpdateName()
+    {
+        var siblingIndex = transform.GetSiblingIndex();
+        var gridIndex = IndexToGrid(siblingIndex, 12);
+        gameObject.name = nameof(Tile) + ": " + siblingIndex.ToString("00") + " || X " + gridIndex.x.ToString("00") +
+                          "  || Y " +
+                          gridIndex.y.ToString("00");
+    }
+
+    private static Vector2Int IndexToGrid(int index, int xSize)
+    {
+        return new Vector2Int(index / xSize, index % xSize);
+    }
+
+    public Tower GetTower()
+    {
+        return towers[(int)towerType];
     }
 }

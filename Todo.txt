@@ -11,3 +11,6 @@ Systems:
 [] Interaction Manager
 [] Tower Behaviours
 [] Monster Behaviours
+
+[] Monster Animations
+[] Game UI

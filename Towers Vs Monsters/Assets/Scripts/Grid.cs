@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Grid : MonoBehaviour
 {
+    public static Grid Instance;
+
     [SerializeField] private List<Tile> grid;
 
-    [FormerlySerializedAs("grassTile")] [SerializeField]
-    private Tile tilePrefab;
+    public List<Tile> Path;
+
+    public List<Vector3> pathCurve;
+
+    [SerializeField] private Tile tilePrefab;
 
     [SerializeField] private Vector2Int gridSize;
     [SerializeField] private Vector2 spacing;
@@ -18,7 +22,12 @@ public class Grid : MonoBehaviour
     [SerializeField] private Tile spawnTile;
     [SerializeField] private Tile exitTile;
 
-    [Button]
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    //[Button]
     public void GenerateGrid()
     {
         var zInitial = -(gridSize.y / 2.0f);
@@ -41,7 +50,7 @@ public class Grid : MonoBehaviour
         }
     }
 
-    [Button]
+    //[Button]
     public void PopulateGrid()
     {
         grid.Clear();
@@ -93,34 +102,34 @@ public class Grid : MonoBehaviour
         yield return null;
     }
 
-    [Button]
-    public void AnimatePath()
+
+    [SerializeField] private bool debugPath;
+
+    private void OnDrawGizmosSelected()
     {
-        var tileTypes = new TileType[grid.Count];
+        if (debugPath == false)
+            return;
+
+        if (Path == null || Path.Count < 2)
+            return;
 
 
-        //Store the types.
-        for (int i = 0; i < grid.Count; i++)
+        Handles.ArrowHandleCap(0, Path[0].transform.position, Quaternion.LookRotation(Vector3.up), 1,
+            EventType.Repaint);
+
+        for (int i = 1; i < Path.Count; i++)
         {
-            tileTypes[i] = grid[i].TileType;
-            grid[i].SetTileType(TileType.Tree1);
+            var current = Path[i];
+            var last = Path[i - 1];
+            var dir = current.transform.position - last.transform.position;
+            dir = dir.normalized;
+            Handles.ArrowHandleCap(0, last.transform.position, Quaternion.LookRotation(dir), .8f,
+                EventType.Repaint);
+            Handles.Label(last.transform.position, i.ToString());
         }
 
-        StartCoroutine(AnimateGrid(grid, tileTypes));
-    }
-
-    private void GetPath(List<Tile> path)
-    {
-        var xLen = gridSize.x;
-        var yLen = gridSize.y;
-        
-        
-    }
-
-    private int GridToLinearCoordinate()
-    {
-        
-        
-        return 0;
+        Handles.ArrowHandleCap(0, Path[Path.Count - 1].transform.position + Vector3.up,
+            Quaternion.LookRotation(Vector3.down),
+            1, EventType.Repaint);
     }
 }
